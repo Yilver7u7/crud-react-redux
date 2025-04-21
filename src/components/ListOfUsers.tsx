@@ -1,20 +1,32 @@
-import { useSelector } from "react-redux";
+import { useAppDispatch, useAppSelector } from "../hooks/store";
+import { useUserActions } from "../hooks/useUsers";
+import { type UserId, deleteUserById } from "../store/users/slice";
 
 export function ListOfUsers() {
-	const users = useSelector( state => state.users);
+	const users = useAppSelector((state) => state.users);
+	const dispatch = useAppDispatch();
+	const { removeUser } = useUserActions()
+
+
+	/*Esta forma genera mucho codigo repetivo */
+	// const handleRemoveUser = (id: UserId) => {
+	// 	dispatch(deleteUserById(id));
+	// };
 
 	return (
 		<>
 			<section className="p-6">
 				<div className="max-w-4xl mx-auto">
 					<h2 className="text-lg font-medium text-gray-900 mb-2">User List</h2>
-					<div className="w-8 h-8 mb-4 flex items-center
+					<div
+						className="w-8 h-8 mb-4 flex items-center
 					justify-center rounded-full bg-gray-50 dark:bg-gray-800 transform 
 					transition-transform duration-200 hover:scale-125 text-white text-sm
 					hover:bg-blue-950"
-					title="Total Users">
-					{users.length}
-				</div>
+						title="Total Users"
+					>
+						{users.length}
+					</div>
 					<div className="overflow-x-auto rounded-lg border border-gray-200 dark:border-gray-800">
 						<table className="min-w-full text-sm text-left dark:text-black-300">
 							<thead className="bg-gray-50 dark:bg-gray-800">
@@ -63,10 +75,13 @@ export function ListOfUsers() {
 												</button>
 
 												{/* Boton Eliminar */}
-												<button type="button">
-
+												<button
+													onClick={() => removeUser(user.id)}
+													type="button"
+												>
 													{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 													<svg
+														aria-label="Remove element"
 														xmlns="http://www.w3.org/2000/svg"
 														fill="none"
 														viewBox="0 0 24 24"
