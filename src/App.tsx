@@ -1,4 +1,5 @@
 import './App.css'
+import { CreateNewUser } from './components/CreatedNewUser'
 import { ListOfUsers } from './components/ListOfUsers'
 
 function App() {
@@ -7,6 +8,7 @@ function App() {
     <>
       <p className='text-black font-semibold'>DESKTOP</p>
       <ListOfUsers/>
+      <CreateNewUser/>
     </>
   )
 }

@@ -4,7 +4,10 @@ import { type UserId, deleteUserById } from "../store/users/slice";
 
 export function ListOfUsers() {
 	const users = useAppSelector((state) => state.users);
-	const dispatch = useAppDispatch();
+	/* const dispatch = useAppDispatch();
+	Con el removeUser nos encargamos que la lógica
+	quede en nuestro customHook en lugar de importar repetidamente
+	useAppDispatch*/
 	const { removeUser } = useUserActions()
 
 
