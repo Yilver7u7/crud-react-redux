@@ -7,7 +7,7 @@
   <img src="https://img.shields.io/badge/Tailwind_CSS-38B2AC?style=for-the-badge&logo=tailwind-css&logoColor=white" alt="Tailwind">
 </div>
 
-![Demo Preview](https://via.placeholder.com/800x400.png/2D3748/EDF2F7?text=UserHub+Demo) <!-- Add actual screenshot path -->
+![Demo Preview](./src/assets/image.png) <!-- Add actual screenshot path -->
 
 ## 🌟 **Project Odyssey**
 **UserHub** es una inmersión práctica en el ecosistema moderno de React, diseñado para dominar:
