@@ -1,9 +1,10 @@
 import { type Middleware, configureStore } from "@reduxjs/toolkit";
 import userReducer, {
 	persistanceMiddleware as persistanceLocalStorageMiddleware,
+	UserWithId,
 } from "./users/slice";
 import { toast } from "sonner";
-import { rollbackUser } from "./users/slice";
+import { rollbackUser, rollbackUser, editUser as editUserAction } from "./users/slice";
 
 /*Un Middleware es algo que se ejecuta dentro un proceso
 Lo que sucede aqui es que estamos llamando a una funcion que se ejecuta 
@@ -46,6 +47,35 @@ const syncWithDatabase: Middleware = store => next => action => {
 		  console.error('Error:', err);
 		  toast.error(`Error al eliminar usuario ${payload}`);
 		});
+	  }else if (type === 'users/editUser') {
+		// 1. Capturamos el usuario ANTES de la actualización
+		const originalUser = previousState.users.find(
+		  (user: UserWithId) => user.id === payload.id
+		);
+		
+		// 2. Simulamos llamada API
+		new Promise((resolve, reject) => {
+		  setTimeout(() => {
+			// Simulación exitosa - 3er parametro forceError para testing
+			const shouldError = false;
+			if (shouldError) {
+			  reject(new Error('Error de conexión'));
+			} else {
+			  resolve(true);
+			}
+		  }, 500);
+		})
+		  .then(() => {
+			// 3. Notificación de éxito
+			toast.success(`Usuario ${payload.name} actualizado correctamente`);
+		  })
+		  .catch((err) => {
+			// 4. Revertimos cambios en caso de error
+			if (originalUser) {
+			  store.dispatch(editUserAction(originalUser));
+			}
+			toast.error(`Error al actualizar usuario: ${err.message}`);
+		  });
 	  }
 
 	// Como podrias hacer una consulta real
