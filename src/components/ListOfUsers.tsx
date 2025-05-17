@@ -1,9 +1,13 @@
+import { useState } from "react";
 import { useAppDispatch, useAppSelector } from "../hooks/store";
 import { useUserActions } from "../hooks/useUsers";
 import { type UserId, deleteUserById } from "../store/users/slice";
+import { EditUser } from "./EditUser";
 
 export function ListOfUsers() {
 	const users = useAppSelector((state) => state.users);
+	const [editingUserId, setEditingUserId] = useState<UserId | null>(null);
+	const userToEdit = users.find(user => user.id === editingUserId);
 	/* const dispatch = useAppDispatch();
 	Con el removeUser nos encargamos que la lógica
 	quede en nuestro customHook en lugar de importar repetidamente
@@ -59,7 +63,8 @@ export function ListOfUsers() {
 										<td className="px-4 py-3">
 											<div className="flex space-x-2">
 												{/* Boton Editar */}
-												<button type="button">
+												<button type="button"
+												 onClick={() => setEditingUserId(user.id)}>
 													{/* biome-ignore lint/a11y/noSvgWithoutTitle: <explanation> */}
 													<svg
 														xmlns="http://www.w3.org/2000/svg"
@@ -108,6 +113,8 @@ export function ListOfUsers() {
 					</div>
 				</div>
 			</section>
+			{userToEdit && (<EditUser user={userToEdit} onCancel={() => setEditingUserId(null)} />)}
+
 		</>
 	);
 }

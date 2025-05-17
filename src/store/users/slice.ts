@@ -76,9 +76,14 @@ export const usersSlice = createSlice({
 				return [...state, action.payload];
 			}
 		},
+		editUser: (state, action: PayloadAction<UserWithId>) => {
+			return state.map(user => 
+				user.id === action.payload.id ? action.payload : user
+			  );
+		},
 	},
 });
 
 export default usersSlice.reducer;
 /*Obtenemos el dato que requerimos el Id obtenido del Payload */
-export const { addNewUser, deleteUserById, rollbackUser } = usersSlice.actions;
+export const { addNewUser, deleteUserById, rollbackUser, editUser } = usersSlice.actions;

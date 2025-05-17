@@ -1,4 +1,5 @@
-import { type User,type UserId, addNewUser, deleteUserById } from "../store/users/slice";
+import { type User,type UserId, type UserWithId, addNewUser, deleteUserById } from "../store/users/slice";
+import { editUser as editUserAction } from "../store/users/slice";
 import { useAppDispatch } from "./store";
 
 /*Se puede pensar que es como un services, debido
@@ -14,5 +15,8 @@ export const useUserActions = () => {
 	const removeUser = (id: UserId) => {
 		dispatch(deleteUserById(id));
 	};
-	return { addUser, removeUser };
+	const editUser = (user: UserWithId) => {
+		dispatch(editUserAction(user));
+	};
+	return { addUser, removeUser, editUser };
 };

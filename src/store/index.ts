@@ -31,7 +31,7 @@ const syncWithDatabase: Middleware = store => next => action => {
 
 	if (type === 'users/deleteUserById') {
 		// Simulamos la llamada API ya que JSONPlaceholder no permite DELETE real
-		const userToRemove = previousState.users.find(user => user.id === payload)
+		const userToRemove = previousState.users.find((user: UserWithId ) => user.id === payload)
 		new Promise((resolve) => {
 		  setTimeout(() => {
 			console.log(`Simulando DELETE para usuario ${payload}`);
