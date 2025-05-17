@@ -1,10 +1,14 @@
+import { useState } from "react";
 import { useUserActions } from "../hooks/useUsers";
 // components/CreateNewUser.tsx
 export function CreateNewUser() {
 	const { addUser } = useUserActions();
+	const [result, setResult] = useState<'ok' | 'ko' | null>(null)
 
 	const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault(); 
+
+	setResult(null)
     
     const form = event.currentTarget;
     const formData = new FormData(form);
@@ -13,9 +17,14 @@ export function CreateNewUser() {
     const email = formData.get('email') as string;
     const github = formData.get('github') as string;
 
+	if(!name || !email || !github){
+		return setResult('ko');
+	}
+
     console.log({name,email,github})
     addUser({ name, email, github });
     form.reset(); // Limpiar el formulario después de enviar
+	setResult('ok');
   };
 
 
